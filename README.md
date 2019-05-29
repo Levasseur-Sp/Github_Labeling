@@ -9,6 +9,10 @@ Could've created a gist but decided on making a repo as it gives an opportunity 
 - Create a [personal github access token](https://help.github.com/articles/creating-an-access-token-for-command-line-use/)
   - Make a `.token` file
   - Copy the token given by github and put it inside the `.token` file
+- Add script execution permission `chmod +x create_github_labels.sh`
+- Modify any label inside (line 23-35) or add others if you need more!
+- Use the script `./create_github_labels.sh`
+  - It will prompt you for the repo owner and repo name
 ## Origin
 - [github#371](https://github.com/isaacs/github/issues/371)
 - [github#281](https://github.com/isaacs/github/issues/281)

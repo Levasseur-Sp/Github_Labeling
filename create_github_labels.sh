@@ -12,28 +12,27 @@
 #   and save it under ".token" file
 
 # To run the script from command line:
-# $ chmod +x create_labels.sh
-# $ ./create_labels.sh
+# $ chmod +x create_github_labels.sh
+# $ ./create_github_labels.sh
 
 ###
 # Label definitions
 ###
 declare -a names descriptions colors
 
-# names+=("bug"); descriptions+=("Something isn't working"); colors+=("EE3F46")
-# names+=("security"); descriptions+=("Potential breach"); colors+=("EE3F46")
-# names+=("production"); descriptions+=("In production"); colors+=("F45D43")
-# names+=("chore"); descriptions+=("Annoying to do but needed"); colors+=("FEF2C0")
-# names+=("discussion"); descriptions+=("Communication is key"); colors+=("CC317C")
-# names+=("question"); descriptions+=("Further information is requested"); colors+=("CC317C")
-# names+=("enhancement"); descriptions+=("Add functionality to an already existing feature"); colors+=("5EBEFF")
-# names+=("optimizaiton"); descriptions+=("Code optimization or refactoring"); colors+=("5EBEFF")
-# names+=("feature"); descriptions+=("New feature or request"); colors+=("91CA55")
-# names+=("in progress"); descriptions+=("Currently working on it"); colors+=("FBCA04")
-# names+=("wontfix"); descriptions+=("This will not be worked on"); colors+=("D2DAE1")
-# names+=("duplicate"); descriptions+=("This issue or pull request already exists"); colors+=("D2DAE1")
-# names+=("on hold"); descriptions+=("Not working on it at the moment"); colors+=("D2DAE1")
-names+=("testing testing"); descriptions+=("should have a desc"); colors+=("D2DAE1")
+names+=("bug"); descriptions+=("Something isn't working"); colors+=("EE3F46")
+names+=("security"); descriptions+=("Potential breach"); colors+=("EE3F46")
+names+=("production"); descriptions+=("In production"); colors+=("F45D43")
+names+=("chore"); descriptions+=("Annoying to do but needed"); colors+=("FEF2C0")
+names+=("discussion"); descriptions+=("Communication is key"); colors+=("CC317C")
+names+=("question"); descriptions+=("Further information is requested"); colors+=("CC317C")
+names+=("enhancement"); descriptions+=("Add functionality to an already existing feature"); colors+=("5EBEFF")
+names+=("optimizaiton"); descriptions+=("Code optimization or refactoring"); colors+=("5EBEFF")
+names+=("feature"); descriptions+=("New feature or request"); colors+=("91CA55")
+names+=("in progress"); descriptions+=("Currently working on it"); colors+=("FBCA04")
+names+=("wontfix"); descriptions+=("This will not be worked on"); colors+=("D2DAE1")
+names+=("duplicate"); descriptions+=("This issue or pull request already exists"); colors+=("D2DAE1")
+names+=("on hold"); descriptions+=("Not working on it at the moment"); colors+=("D2DAE1")
 
 ###
 # Get a token from Github
