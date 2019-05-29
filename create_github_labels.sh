@@ -20,19 +20,20 @@
 ###
 declare -a names descriptions colors
 
-names+=("bug"); descriptions+=("Something isn't right"); colors+=("EE3F46")
-names+=("security"); descriptions+=("Potential Breach"); colors+=("EE3F46")
-names+=("production"); descriptions+=("In production"); colors+=("F45D43")
-names+=("chore"); descriptions+=("Annoying but useful"); colors+=("FEF2C0")
-names+=("discussion"); descriptions+=("Let's talk about it"); colors+=("CC317C")
-names+=("question"); descriptions+=(""); colors+=("CC317C")
-names+=("enhancement"); descriptions+=("Add functionality to an already existing feature"); colors+=("5EBEFF")
-names+=("optimizaiton"); descriptions+=("Optimize code"); colors+=("5EBEFF")
-names+=("feature"); descriptions+=("New feature"); colors+=("91CA55")
-names+=("in progress"); descriptions+=("Currently working on it"); colors+=("FBCA04")
-names+=("wontfix"); descriptions+=("Not important"); colors+=("D2DAE1")
-names+=("duplicate"); descriptions+=("Issue already exists"); colors+=("D2DAE1")
-names+=("on hold"); descriptions+=("Not working on it at the moment"); colors+=("D2DAE1")
+# names+=("bug"); descriptions+=("Something isn't working"); colors+=("EE3F46")
+# names+=("security"); descriptions+=("Potential breach"); colors+=("EE3F46")
+# names+=("production"); descriptions+=("In production"); colors+=("F45D43")
+# names+=("chore"); descriptions+=("Annoying to do but needed"); colors+=("FEF2C0")
+# names+=("discussion"); descriptions+=("Communication is key"); colors+=("CC317C")
+# names+=("question"); descriptions+=("Further information is requested"); colors+=("CC317C")
+# names+=("enhancement"); descriptions+=("Add functionality to an already existing feature"); colors+=("5EBEFF")
+# names+=("optimizaiton"); descriptions+=("Code optimization or refactoring"); colors+=("5EBEFF")
+# names+=("feature"); descriptions+=("New feature or request"); colors+=("91CA55")
+# names+=("in progress"); descriptions+=("Currently working on it"); colors+=("FBCA04")
+# names+=("wontfix"); descriptions+=("This will not be worked on"); colors+=("D2DAE1")
+# names+=("duplicate"); descriptions+=("This issue or pull request already exists"); colors+=("D2DAE1")
+# names+=("on hold"); descriptions+=("Not working on it at the moment"); colors+=("D2DAE1")
+names+=("testing testing"); descriptions+=("should have a desc"); colors+=("D2DAE1")
 
 ###
 # Get a token from Github
@@ -43,12 +44,13 @@ read -p "Who owns the repo you want labels on?: " owner
 read -p "What repo do you want labels on?: " repo
 
 url="https://api.github.com/repos/${owner}/${repo}/labels"
-header="Authorization: token ${token}"
+token_header="Authorization: token ${token}"
+accept_header="Accept: application/vnd.github.symmetra-preview+json"
 
 for i in ${!names[@]}; do
     data="{\"name\":\"${names[$i]}\", \"color\":\"${colors[$i]}\", \"description\":\"${descriptions[$i]}\"}"
 
-    curl_output=$(curl -s -H "${header}" -X POST "$url" -d "${data}")
+    curl_output=$(curl -s -H "${token_header}" -H "${accept_header}" -X POST "${url}" -d "${data}")
     curl_has_error=$(echo "${curl_output}" | jq -r '.errors')
 
     if [ ! -z "${curl_has_error}" ] && [ "${curl_has_error}" != null ]; then
@@ -56,7 +58,7 @@ for i in ${!names[@]}; do
 
         if [ "${error}" == "already_exists" ]; then
             echo "'${names[$i]}' already exists. Updating..."
-            curl_output=$(curl -s -H "${header}" -X PATCH "${url}/${names[$i]/ /%20}" -d "${data}")
+            curl_output=$(curl -s -H "${token_header}" -H "${accept_header}" -X PATCH "${url}/${names[$i]/ /%20}" -d "${data}")
             echo "Updated '${names[$i]}'."
         else
             echo "Unknown error: ${error}"
