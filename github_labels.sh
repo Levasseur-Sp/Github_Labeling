@@ -38,7 +38,7 @@ names+=("on hold"); descriptions+=("Not working on it at the moment"); colors+=(
 # Get a token from Github
 ###
 
-token=$(cat .token)
+token=$(cat .github_api_token)
 read -p "Who owns the repo you want labels on?: " owner
 read -p "What repo do you want labels on?: " repo
 
