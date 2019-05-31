@@ -16,6 +16,50 @@
 # $ ./create_github_labels.sh
 
 ###
+# Script usage
+###
+usage() {
+    echo "Usage:"
+    echo -e " $0 [ -d | --delete-original ] [ -D | --delete-all ]\n $0 [ --help | -h ]\n"
+    echo -e "\tDefault only creates/updates labels"
+}
+
+###
+# Deletion functions
+###
+delete_original() {
+    echo "Not yet implemented"
+    exit 0
+}
+
+delete_all() {
+    echo "Not yet implemented"
+    exit 0
+}
+
+###
+# Script flags consideration
+###
+optspec="dDh"
+while getopts "$optspec" opt; do
+    if [ $opt == "h"]; then
+        usage
+        exit 0
+    fi
+done
+
+while getopts "$optspec" opt; do
+    case $opt in
+    d) delete_original ;;
+    D) delete_all ;;
+    \?)
+        echo "Invalid option: -$OPTARG" >&2
+        exit 127
+        ;;
+    esac
+done
+
+###
 # Label definitions
 ###
 declare -a names descriptions colors
@@ -35,7 +79,7 @@ names+=("duplicate"); descriptions+=("This issue or pull request already exists"
 names+=("on hold"); descriptions+=("Not working on it at the moment"); colors+=("D2DAE1")
 
 ###
-# Get a token from Github
+# Get and set necessary information
 ###
 
 token=$(cat .github_api_token)
@@ -45,6 +89,10 @@ read -p "What repo do you want labels on?: " repo
 url="https://api.github.com/repos/${owner}/${repo}/labels"
 token_header="Authorization: token ${token}"
 accept_header="Accept: application/vnd.github.symmetra-preview+json"
+
+###
+# Create or Update labels
+###
 
 for i in ${!names[@]}; do
     data="{\"name\":\"${names[$i]}\", \"color\":\"${colors[$i]}\", \"description\":\"${descriptions[$i]}\"}"
