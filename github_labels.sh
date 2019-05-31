@@ -1,22 +1,20 @@
 #!/usr/bin/env bash
 
-# This is a clone of
-#   https://gist.github.com/Chompas/fb158eb01204d03f783d
-# Colours and convention picked from
-#   https://robinpowered.com/blog/best-practice-system-for-organizing-and-tagging-github-issues/
+###
+# Setup of necessary information
+###
 
-## Instructions
-# Bash 4+ is needed because of associative arrays
-# jq (https://stedolan.github.io/jq/)
-# Create access Token from Github https://help.github.com/articles/creating-an-access-token-for-command-line-use/
-#   and save it under ".token" file
+token=$(cat .github_api_token)
+read -p "Who owns the repo you want labels on?: " owner
+read -p "What repo do you want labels on?: " repo
 
-# To run the script from command line:
-# $ chmod +x create_github_labels.sh
-# $ ./create_github_labels.sh
+# url="https://api.github.com/repos/${owner}/${repo}/labels"
+url="https://api.github.com/repos/Levasseur-Sp/Chatting_App/labels"
+token_header="Authorization: token ${token}"
+accept_header="Accept: application/vnd.github.symmetra-preview+json"
 
 ###
-# Script usage
+# Script help
 ###
 usage() {
     echo "Usage:"
@@ -25,33 +23,40 @@ usage() {
 }
 
 ###
-# Deletion functions
+# Deletion function
 ###
 delete_original() {
-    echo "Not yet implemented"
-    exit 0
-}
+    declare -a original
+    original=("bug" "duplicate" "enhancement" "good first issue" "help wanted" "invalid" "question" "wontfix")
 
-delete_all() {
-    echo "Not yet implemented"
+    for i in ${!original[@]}; do
+        curl_output=$(curl -s -H "${token_header}" -H "${accept_header}" -X DELETE "${url}/${original[$i]// /%20}")
+        curl_has_error=$(echo "${curl_output}" | jq -r '.errors')
+
+        if [ ! -z "${curl_has_error}" ] && [ "${curl_has_error}" != null ]; then
+            error=$(echo "${curl_output}")
+            echo "Error: ${error}"
+            echo -e "Output from curl: \n${curl_output}"
+            echo "Exiting..."
+            exit 1
+        fi
+        sleep 1
+    done
+    echo "Deleted originals."
     exit 0
 }
 
 ###
 # Script flags consideration
 ###
-optspec="dDh"
-while getopts "$optspec" opt; do
-    if [ $opt == "h"]; then
-        usage
-        exit 0
-    fi
-done
-
+optspec="dh"
 while getopts "$optspec" opt; do
     case $opt in
+    h)
+        usage
+        exit 0
+        ;;
     d) delete_original ;;
-    D) delete_all ;;
     \?)
         echo "Invalid option: -$OPTARG" >&2
         exit 127

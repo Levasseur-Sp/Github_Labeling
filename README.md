@@ -2,19 +2,21 @@
 
 This is the result of wanting a less annoying labeling system for when I create a repo.
 
-Could've created a gist but decided on making a repo as it gives an opportunity to test it and have a readme.
+Could've created a gist but decided on making a repo as it gives an opportunity to test it in the repo and have a readme.
 
-## Usage
+## Requirements
+- Bash 4+ is needed because of associative arrays
+- [Jq](https://stedolan.github.io/jq/)
+- A [personal github access token](https://help.github.com/articles/creating-an-access-token-for-command-line-use/)
+
+## Setup && Usage
 - Clone this project `git clone https://github.com/Levasseur-Sp/Github_Labeling`
-- Create a [personal github access token](https://help.github.com/articles/creating-an-access-token-for-command-line-use/)
-  - Make a `.token` file
-  - Copy the token given by github and put it inside the `.token` file
-- Add script execution permission `chmod +x create_github_labels.sh`
-- Modify any label inside (line 23-35) or add others if you need more!
+- Make a `.github_api_token` file
+- Copy the personal github access token and put it inside the `.github_api_token` file
+- Add script execution permission `chmod +x github_labels.sh`
 - Use the script `./create_github_labels.sh`
   - It will prompt you for the repo owner and repo name
-## Origin
-- [github#371](https://github.com/isaacs/github/issues/371)
-- [github#281](https://github.com/isaacs/github/issues/281)
-- Cloned from [this one](https://gist.github.com/Chompas/fb158eb01204d03f783d)
-  - The original is noted in the gist
+
+## Sources
+- Original from Mads Ohm Larsen, (***omegahm***), [here](https://gist.github.com/omegahm/28d87a4e1411c030aa89)
+- Colours and convention picked from [here](https://robinpowered.com/blog/best-practice-system-for-organizing-and-tagging-github-issues/)
