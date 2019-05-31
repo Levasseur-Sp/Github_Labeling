@@ -5,7 +5,7 @@
 ###
 
 declare -a original names descriptions colors
-original=("bug" "duplicate" "enhancement" "good first issue" "help wanted" "invalid" "question" "wontfix")
+original=("good first issue" "help wanted" "invalid")
 names+=("bug");descriptions+=("Something isn't working");colors+=("EE3F46")
 names+=("security");descriptions+=("Potential breach");colors+=("EE3F46")
 names+=("production");descriptions+=("In production");colors+=("F45D43")
